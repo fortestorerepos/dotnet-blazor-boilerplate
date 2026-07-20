@@ -1,7 +1,10 @@
 SOLUTION := ./blazor-boilerplate.slnx
-SERVER_PROJECT := ./blazor-boilerplate/blazor-boilerplate/blazor-boilerplate.csproj
+SERVER_PROJECT := ./blazor-boilerplate/blazor-boilerplate.csproj
 DEV_PROFILE ?= http
 PROD_URLS ?= http://localhost:5000
+DOTNET ?= dotnet
+
+.DEFAULT_GOAL := build
 
 .PHONY: help restore build dev prod publish clean
 
@@ -15,19 +18,19 @@ help:
 	@echo "  make clean    Clean the solution"
 
 restore:
-	dotnet restore $(SOLUTION)
+	$(DOTNET) restore $(SOLUTION)
 
 build:
-	dotnet build $(SOLUTION)
+	$(DOTNET) build $(SOLUTION)
 
 dev:
-	dotnet watch --project $(SERVER_PROJECT) run --launch-profile $(DEV_PROFILE)
+	$(DOTNET) watch --project $(SERVER_PROJECT) run --launch-profile $(DEV_PROFILE)
 
 prod:
-	dotnet run --project $(SERVER_PROJECT) --configuration Release --no-launch-profile -e ASPNETCORE_ENVIRONMENT=Production -e DOTNET_ENVIRONMENT=Production -- --urls "$(PROD_URLS)"
+	$(DOTNET) run --project $(SERVER_PROJECT) --configuration Release --no-launch-profile -e ASPNETCORE_ENVIRONMENT=Production -e DOTNET_ENVIRONMENT=Production -- --urls "$(PROD_URLS)"
 
 publish:
-	dotnet publish $(SERVER_PROJECT) --configuration Release --output ./publish
+	$(DOTNET) publish $(SERVER_PROJECT) --configuration Release --output ./publish
 
 clean:
-	dotnet clean $(SOLUTION)
+	$(DOTNET) clean $(SOLUTION)

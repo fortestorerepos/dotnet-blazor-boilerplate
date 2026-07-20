@@ -1,0 +1,11 @@
+{
+    "dotnet.defaultSolution": "blazor-boilerplate.slnx",
+    "files.exclude": {
+        "**/bin": true,
+        "**/obj": true,
+        "**/.assets": true,
+        // For development purposes only
+        "**/.vscode": false,
+        "**/docs": false
+    }
+}
