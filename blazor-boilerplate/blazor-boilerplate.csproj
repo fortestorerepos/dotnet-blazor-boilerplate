@@ -4,7 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-blazor_boilerplate-462b396d-d443-456a-bfb5-6b109e6b3427</UserSecretsId>
+    <UserSecretsId>aspnet-blazor-boilerplate</UserSecretsId>
     <RootNamespace>blazor_boilerplate</RootNamespace>
     <AssemblyName>$(AssemblyName.Replace(' ', '_'))</AssemblyName>
     <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
