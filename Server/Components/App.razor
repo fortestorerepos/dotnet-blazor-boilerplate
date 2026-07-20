@@ -7,6 +7,14 @@
     <base href="/" />
     <ResourcePreloader />
     <AppRadzenTheme Theme="material" />
+    <meta http-equiv="Content-Security-Policy"
+               content="base-uri 'self';
+               default-src 'self';
+               img-src data: https:;
+               object-src 'none';
+               script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval';
+               style-src 'self' 'unsafe-inline';
+               upgrade-insecure-requests;">
     <link rel="stylesheet" href="@Assets["lib/bootstrap/dist/css/bootstrap.min.css"]" />
     <link rel="stylesheet" href="@Assets["app.css"]" />
     <link rel="stylesheet" href="@Assets["blazor-boilerplate.styles.css"]" />
