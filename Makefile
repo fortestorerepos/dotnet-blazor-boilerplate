@@ -1,5 +1,5 @@
 SOLUTION := ./blazor-boilerplate.slnx
-SERVER_PROJECT := ./blazor-boilerplate/blazor-boilerplate.csproj
+SERVER_PROJECT := ./Server/blazor-boilerplate.csproj
 DEV_PROFILE ?= http
 PROD_URLS ?= http://localhost:5000
 DOTNET ?= dotnet

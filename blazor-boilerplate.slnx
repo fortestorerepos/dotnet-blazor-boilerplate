@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="blazor-boilerplate.Client/blazor-boilerplate.Client.csproj" />
-  <Project Path="blazor-boilerplate.Shared/blazor-boilerplate.Shared.csproj" />
-  <Project Path="blazor-boilerplate/blazor-boilerplate.csproj" />
+  <Project Path="Client/blazor-boilerplate.Client.csproj" />
+  <Project Path="Server/blazor-boilerplate.csproj" />
+  <Project Path="Shared/blazor-boilerplate.Shared.csproj" />
 </Solution>
