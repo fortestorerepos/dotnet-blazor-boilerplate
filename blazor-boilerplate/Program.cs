@@ -2,6 +2,7 @@ using blazor_boilerplate.Client.Pages;
 using blazor_boilerplate.Components;
 using blazor_boilerplate.Components.Account;
 using blazor_boilerplate.Data;
+using blazor_boilerplate.Shared;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
+builder.Services.AddSharedUi();
 
 builder.Services.AddAuthentication(options =>
     {
@@ -64,7 +66,9 @@ app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(blazor_boilerplate.Client._Imports).Assembly);
+    .AddAdditionalAssemblies(
+        typeof(blazor_boilerplate.Client._Imports).Assembly,
+        typeof(SharedAssembly).Assembly);
 
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();

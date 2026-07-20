@@ -1,0 +1,22 @@
+<RadzenButton Text="@Text"
+              Icon="@Icon"
+              ButtonStyle="@ButtonStyle"
+              Disabled="@Disabled"
+              Click="@Click" />
+
+@code {
+    [Parameter]
+    public string Text { get; set; } = "Submit";
+
+    [Parameter]
+    public string? Icon { get; set; }
+
+    [Parameter]
+    public ButtonStyle ButtonStyle { get; set; } = ButtonStyle.Primary;
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> Click { get; set; }
+}

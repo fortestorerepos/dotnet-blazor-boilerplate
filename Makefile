@@ -26,7 +26,7 @@ build:
 dev:
 	$(DOTNET) watch --project $(SERVER_PROJECT) run --launch-profile $(DEV_PROFILE)
 
-prod:
+start:
 	$(DOTNET) run --project $(SERVER_PROJECT) --configuration Release --no-launch-profile -e ASPNETCORE_ENVIRONMENT=Production -e DOTNET_ENVIRONMENT=Production -- --urls "$(PROD_URLS)"
 
 publish:
