@@ -2,4 +2,5 @@
   <Project Path="Client/blazor-boilerplate.Client.csproj" />
   <Project Path="Server/blazor-boilerplate.csproj" />
   <Project Path="Shared/blazor-boilerplate.Shared.csproj" />
+  <Project Path="Tests/blazor-boilerplate.Tests.csproj" />
 </Solution>
