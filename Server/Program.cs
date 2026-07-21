@@ -1,10 +1,9 @@
-using blazor_boilerplate.Client.Pages;
 using blazor_boilerplate.Components;
 using blazor_boilerplate.Components.Account;
+using blazor_boilerplate.Console;
 using blazor_boilerplate.Data;
 using blazor_boilerplate.Shared;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,8 +43,14 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
     .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+builder.Services.AddConsoleHost();
 
 var app = builder.Build();
+
+if (await app.RunConsoleCommandIfRequestedAsync(args) is { } consoleExitCode)
+{
+    return consoleExitCode;
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -75,4 +80,5 @@ app.MapRazorComponents<App>()
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
 
-app.Run();
+await app.RunAsync();
+return 0;
