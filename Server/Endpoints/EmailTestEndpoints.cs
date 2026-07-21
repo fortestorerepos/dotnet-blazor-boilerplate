@@ -1,5 +1,4 @@
 using blazor_boilerplate.Providers.Email;
-using blazor_boilerplate.Shared.Email;
 using Microsoft.Extensions.Options;
 
 namespace blazor_boilerplate.Endpoints;
@@ -13,6 +12,8 @@ public static class EmailTestEndpoints
 
         return endpoints;
     }
+
+    private sealed record EmailTestResult(bool Success, string Message);
 
     private static async Task<IResult> SendTestEmailAsync(
         IEmailProvider emailProvider,
