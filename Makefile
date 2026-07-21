@@ -6,10 +6,11 @@ DOTNET ?= dotnet
 
 .DEFAULT_GOAL := build
 
-.PHONY: help restore build dev start console publish clean
+.PHONY: help setup restore build dev start console publish clean
 
 help:
 	@echo "Targets:"
+	@echo "  make setup    Create Server/appsettings.Development.json from appsettings.json"
 	@echo "  make dev      Run the app in Development with dotnet watch"
 	@echo "  make start    Run the app in Production with Release configuration"
 	@echo "  make console  Run an app console command, e.g. make console ARGS=\"list\""
@@ -17,6 +18,9 @@ help:
 	@echo "  make restore  Restore NuGet packages"
 	@echo "  make publish  Publish a Release build to ./publish"
 	@echo "  make clean    Clean the solution"
+
+setup:
+	$(if $(wildcard Server/appsettings.Development.json),@echo Server/appsettings.Development.json already exists.,$(file >Server/appsettings.Development.json,$(file <Server/appsettings.json))@echo Created Server/appsettings.Development.json.)
 
 restore:
 	$(DOTNET) restore $(SOLUTION)
