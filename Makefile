@@ -4,6 +4,11 @@ DEV_PROFILE ?= http
 PROD_URLS ?= http://localhost:5000
 DOTNET ?= dotnet
 
+ifneq (,$(wildcard .env))
+include .env
+export
+endif
+
 .DEFAULT_GOAL := build
 
 .PHONY: help restore build dev start console publish clean

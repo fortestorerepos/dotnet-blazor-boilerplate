@@ -2,7 +2,10 @@ using blazor_boilerplate.Components;
 using blazor_boilerplate.Components.Account;
 using blazor_boilerplate.Console;
 using blazor_boilerplate.Data;
+using blazor_boilerplate.Endpoints;
+using blazor_boilerplate.Providers.Email;
 using blazor_boilerplate.Shared;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +23,10 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 builder.Services.AddSharedUi();
+builder.Services.AddScoped(sp => new HttpClient
+{
+    BaseAddress = new Uri(sp.GetRequiredService<NavigationManager>().BaseUri)
+});
 
 builder.Services.AddAuthentication(options =>
     {
@@ -42,7 +49,9 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
     .AddSignInManager()
     .AddDefaultTokenProviders();
 
-builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection(EmailOptions.SectionName));
+builder.Services.AddTransient<IEmailProvider, SmtpEmailProvider>();
+builder.Services.AddTransient<IEmailSender<ApplicationUser>, IdentityEmailSender>();
 builder.Services.AddConsoleHost();
 
 var app = builder.Build();
@@ -76,6 +85,8 @@ app.MapRazorComponents<App>()
     .AddAdditionalAssemblies(
         typeof(blazor_boilerplate.Client._Imports).Assembly,
         typeof(SharedAssembly).Assembly);
+
+app.MapEmailTestEndpoints();
 
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();

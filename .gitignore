@@ -1,4 +1,6 @@
 .vs/
+.env*
+!.env.example
 **/*/bin/
 bin/
 **/*/obj/

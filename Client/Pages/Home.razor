@@ -1,7 +1,60 @@
-﻿@page "/"
+@page "/"
+@using blazor_boilerplate.Shared.Email
+@inject HttpClient HttpClient
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+<p>Welcome to your new app.</p>
+
+<div class="mt-4">
+    <AppButton Text="@SendButtonText"
+               Icon="mail"
+               Disabled="@isSendingEmail"
+               Click="SendTestEmailAsync" />
+</div>
+
+@if (emailStatusMessage is not null)
+{
+    <div class="@EmailStatusClass" role="status">
+        @emailStatusMessage
+    </div>
+}
+
+@code {
+    private bool isSendingEmail;
+    private bool emailSendFailed;
+    private string? emailStatusMessage;
+
+    private string SendButtonText => isSendingEmail ? "Sending..." : "Send test email";
+
+    private string EmailStatusClass => emailSendFailed
+        ? "alert alert-danger mt-3"
+        : "alert alert-success mt-3";
+
+    private async Task SendTestEmailAsync(MouseEventArgs args)
+    {
+        isSendingEmail = true;
+        emailSendFailed = false;
+        emailStatusMessage = null;
+
+        try
+        {
+            using var response = await HttpClient.PostAsync("api/email/test", content: null);
+            var result = await response.Content.ReadFromJsonAsync<EmailTestResult>();
+
+            emailSendFailed = !response.IsSuccessStatusCode || result?.Succeeded != true;
+            emailStatusMessage = result?.Message ?? "The email service did not return a response.";
+        }
+        catch (Exception exception)
+        {
+            emailSendFailed = true;
+            emailStatusMessage = exception.Message;
+        }
+        finally
+        {
+            isSendingEmail = false;
+        }
+    }
+}
