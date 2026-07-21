@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+@using Microsoft.AspNetCore.Http
+@using Microsoft.Extensions.Options
+@inject ThemeService ThemeService
+@inject IOptions<CookieThemeServiceOptions> ThemeCookieOptions
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
     <ResourcePreloader />
-    <AppRadzenTheme Theme="material" />
+    <AppRadzenTheme />
     <meta http-equiv="Content-Security-Policy"
                content="base-uri 'self';
                default-src 'self';
@@ -35,6 +40,30 @@
 @code {
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        if (HttpContext is null)
+        {
+            return;
+        }
+
+        var theme = HttpContext.Request.Cookies[blazor_boilerplate.Shared.ServiceCollectionExtensions.ThemeCookieName];
+        if (!string.IsNullOrWhiteSpace(theme))
+        {
+            ThemeService.SetTheme(theme, false);
+            return;
+        }
+
+        HttpContext.Response.Cookies.Append(
+            blazor_boilerplate.Shared.ServiceCollectionExtensions.ThemeCookieName,
+            blazor_boilerplate.Shared.ServiceCollectionExtensions.DefaultTheme,
+            new CookieOptions
+            {
+                Secure = ThemeCookieOptions.Value.IsSecure,
+                Expires = DateTimeOffset.Now.Add(ThemeCookieOptions.Value.Duration)
+            });
+    }
 
     private IComponentRenderMode? PageRenderMode =>
         HttpContext.AcceptsInteractiveRouting() ? InteractiveAuto : null;

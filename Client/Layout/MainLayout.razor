@@ -1,13 +1,20 @@
 @inherits LayoutComponentBase
 @implements IDisposable
 
+@inject CookieThemeService CookieThemeService
 @inject NavigationManager NavigationManager
 
 <RadzenLayout>
     <RadzenHeader>
-        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
-            <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
-            <RadzenLabel Text="Header" />
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem" class="app-header">
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+                <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
+                <RadzenLabel Text="Header" />
+            </RadzenStack>
+
+            <RadzenAppearanceToggle LightTheme="@blazor_boilerplate.Shared.ServiceCollectionExtensions.DefaultTheme"
+                                    DarkTheme="@blazor_boilerplate.Shared.ServiceCollectionExtensions.DefaultDarkTheme"
+                                    class="app-theme-toggle" />
         </RadzenStack>
     </RadzenHeader>
 

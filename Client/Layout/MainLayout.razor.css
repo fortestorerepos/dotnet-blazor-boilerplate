@@ -7,6 +7,15 @@
     align-items: center;
 }
 
+:deep(.app-header) {
+    width: 100%;
+    padding-right: 0.75rem;
+}
+
+:deep(.app-theme-toggle) {
+    margin-left: auto;
+}
+
 :deep(.rz-sidebar) {
     min-width: max-content;
 }
