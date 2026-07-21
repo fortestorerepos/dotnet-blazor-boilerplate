@@ -1,6 +1,7 @@
 .vs/
 .env*
 !.env.example
+**/*/appsettings.Development.json
 **/*/bin/
 bin/
 **/*/obj/

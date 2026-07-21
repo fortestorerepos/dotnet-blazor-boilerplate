@@ -21,20 +21,24 @@ Add new commands in `Server/Console/Commands` by implementing `IConsoleCommand`,
 
 ## Email configuration
 
-Email settings are read from environment variables. Copy `.env.example` to `.env` for local runs, fill in your SMTP values, and keep `.env` out of git.
+For local development, copy `Server/appsettings.Development.example.json` to `Server/appsettings.Development.json`, fill in your SMTP values, and keep `Server/appsettings.Development.json` out of git.
 
-```bash
-Email__Host=smtp.example.com
-Email__Port=587
-Email__EnableSsl=true
-Email__FromEmail=no-reply@example.com
-Email__FromName=Blazor Boilerplate
-Email__UserName=smtp-user
-Email__Password=replace-with-secret
-Email__TestRecipient=you@example.com
+```json
+{
+  "Email": {
+    "Host": "smtp.example.com",
+    "Port": 587,
+    "EnableSsl": true,
+    "FromEmail": "no-reply@example.com",
+    "FromName": "Blazor Boilerplate",
+    "UserName": "smtp-user",
+    "Password": "replace-with-secret",
+    "TestRecipient": "you@example.com"
+  }
+}
 ```
 
-ASP.NET Core reads real environment variables automatically in production. The Makefile exports `.env` values for local `make dev`, `make start`, and `make console` runs.
+Production should still use real environment variables or the host's secret manager. Environment variables override values from `appsettings.json` and `appsettings.Development.json`.
 
 ## Crons
 
