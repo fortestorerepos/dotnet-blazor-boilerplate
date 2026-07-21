@@ -4,22 +4,22 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<RadzenText TextStyle="TextStyle.H1" TagName="TagName.H1">Hello, world!</RadzenText>
 
 <p>Welcome to your new app.</p>
 
-<div class="mt-4">
+<RadzenStack Orientation="Orientation.Horizontal" class="home-actions">
     <AppButton Text="@SendButtonText"
                Icon="mail"
                Disabled="@isSendingEmail"
                Click="SendTestEmailAsync" />
-</div>
+</RadzenStack>
 
 @if (emailStatusMessage is not null)
 {
-    <div class="@EmailStatusClass" role="status">
+    <RadzenAlert AlertStyle="@EmailAlertStyle" ShowIcon="true" class="home-status" role="status">
         @emailStatusMessage
-    </div>
+    </RadzenAlert>
 }
 
 @code {
@@ -29,9 +29,9 @@
 
     private string SendButtonText => isSendingEmail ? "Sending..." : "Send test email";
 
-    private string EmailStatusClass => emailSendFailed
-        ? "alert alert-danger mt-3"
-        : "alert alert-success mt-3";
+    private AlertStyle EmailAlertStyle => emailSendFailed
+        ? AlertStyle.Danger
+        : AlertStyle.Success;
 
     private async Task SendTestEmailAsync(MouseEventArgs args)
     {

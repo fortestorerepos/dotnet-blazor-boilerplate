@@ -1,4 +1,4 @@
-﻿@page "/Account/ResendEmailConfirmation"
+@page "/Account/ResendEmailConfirmation"
 
 @using System.ComponentModel.DataAnnotations
 @using System.Text
@@ -18,17 +18,17 @@
 <h2>Enter your email.</h2>
 <hr />
 <StatusMessage Message="@message" />
-<div class="row">
-    <div class="col-md-4">
+<div class="account-form-grid">
+    <div class="account-form-column">
         <EditForm Model="Input" FormName="resend-email-confirmation" OnValidSubmit="OnValidSubmitAsync" method="post">
             <DataAnnotationsValidator />
-            <ValidationSummary class="text-danger" role="alert" />
-            <div class="form-floating mb-3">
-                <InputText @bind-Value="Input.Email" id="Input.Email" class="form-control" aria-required="true" placeholder="name@example.com" />
-                <label for="Input.Email" class="form-label">Email</label>
-                <ValidationMessage For="() => Input.Email" class="text-danger" />
+            <ValidationSummary class="account-validation" role="alert" />
+            <div class="account-field">
+                <InputText @bind-Value="Input.Email" id="Input.Email" class="rz-inputtext rz-textbox account-control" aria-required="true" placeholder="name@example.com" />
+                <label for="Input.Email" class="account-label">Email</label>
+                <ValidationMessage For="() => Input.Email" class="account-validation" />
             </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Resend</button>
+            <button type="submit" class="rz-button rz-button-md rz-variant-filled rz-primary rz-shade-default account-action-fill">Resend</button>
         </EditForm>
     </div>
 </div>

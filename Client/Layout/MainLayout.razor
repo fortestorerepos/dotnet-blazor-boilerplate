@@ -1,25 +1,86 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
+@implements IDisposable
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+@inject NavigationManager NavigationManager
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+<RadzenLayout>
+    <RadzenHeader>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+            <RadzenLabel Text="Header" />
+        </RadzenStack>
+    </RadzenHeader>
 
-        <article class="content px-4">
+    <RadzenSidebar Position="SidebarPosition.Left" Expanded="@sidebarExpanded">
+        <RadzenPanelMenu>
+            <RadzenPanelMenuItem Text="Home" Icon="home" Path="" />
+            <RadzenPanelMenuItem Text="Counter" Icon="add_box" Path="counter" />
+            <RadzenPanelMenuItem Text="Weather" Icon="table_chart" Path="weather" />
+            <RadzenPanelMenuItem Text="Auth Required" Icon="lock" Path="auth" />
+
+            <AuthorizeView>
+                <Authorized>
+                    <RadzenPanelMenuItem Text="@(context.User.Identity?.Name ?? "Account")" Icon="account_circle" Path="Account/Manage" />
+                </Authorized>
+                <NotAuthorized>
+                    <RadzenPanelMenuItem Text="Register" Icon="person_add" Path="Account/Register" />
+                    <RadzenPanelMenuItem Text="Login" Icon="login" Path="Account/Login" />
+                </NotAuthorized>
+            </AuthorizeView>
+        </RadzenPanelMenu>
+
+        <AuthorizeView>
+            <Authorized>
+                <form action="Account/Logout" method="post" class="app-sidebar-logout">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                    <RadzenButton ButtonType="ButtonType.Submit"
+                                  ButtonStyle="ButtonStyle.Light"
+                                  Icon="logout"
+                                  Text="@(sidebarExpanded ? "Logout" : null)"
+                                  Variant="Variant.Text"
+                                  class="app-logout-button" />
+                </form>
+            </Authorized>
+        </AuthorizeView>
+    </RadzenSidebar>
+
+    <RadzenBody>
+        <div class="rz-p-4">
             @Body
-        </article>
-    </main>
-</div>
+        </div>
+    </RadzenBody>
+
+    <RadzenFooter>
+        Footer
+    </RadzenFooter>
+</RadzenLayout>
 
 <div id="blazor-error-ui" data-nosnippet>
     An unhandled error has occurred.
     <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
+    <span class="dismiss">x</span>
 </div>
 
 <AppRadzenComponents />
+
+@code {
+    private bool sidebarExpanded = true;
+    private string? currentUrl;
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}

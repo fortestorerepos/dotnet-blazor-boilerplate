@@ -1,17 +1,17 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
 @layout blazor_boilerplate.Client.Layout.MainLayout
 
-<h1>Manage your account</h1>
+<RadzenText TextStyle="TextStyle.H1" TagName="TagName.H1">Manage your account</RadzenText>
 
-<div>
-    <h2>Change your account settings</h2>
+<section class="account-page">
+    <RadzenText TextStyle="TextStyle.H2" TagName="TagName.H2">Change your account settings</RadzenText>
     <hr />
-    <div class="row">
-        <div class="col-lg-3">
+    <div class="account-manage-grid">
+        <div>
             <ManageNavMenu />
         </div>
-        <div class="col-lg-9">
+        <div>
             @Body
         </div>
     </div>
-</div>
+</section>

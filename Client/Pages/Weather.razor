@@ -2,37 +2,28 @@
 
 <PageTitle>Weather</PageTitle>
 
-<h1>Weather</h1>
+<RadzenText TextStyle="TextStyle.H1" TagName="TagName.H1">Weather</RadzenText>
 
 <p>This component demonstrates showing data.</p>
 
 @if (forecasts == null)
 {
-    <p><em>Loading...</em></p>
+    <RadzenProgressBarCircular ShowValue="false" Mode="ProgressBarMode.Indeterminate" />
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th aria-label="Temperature in Celsius">Temp. (C)</th>
-                <th aria-label="Temperature in Fahrenheit">Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <RadzenDataGrid Data="@forecasts" TItem="WeatherForecast" AllowPaging="false" AllowSorting="true">
+        <Columns>
+            <RadzenDataGridColumn TItem="WeatherForecast" Title="Date">
+                <Template Context="forecast">
+                    @forecast.Date.ToShortDateString()
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="WeatherForecast" Property="TemperatureC" Title="Temp. (C)" />
+            <RadzenDataGridColumn TItem="WeatherForecast" Property="TemperatureF" Title="Temp. (F)" />
+            <RadzenDataGridColumn TItem="WeatherForecast" Property="Summary" Title="Summary" />
+        </Columns>
+    </RadzenDataGrid>
 }
 
 @code {

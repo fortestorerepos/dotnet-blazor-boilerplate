@@ -1,4 +1,4 @@
-﻿@page "/Account/Login"
+@page "/Account/Login"
 
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Authentication
@@ -14,38 +14,38 @@
 <PageTitle>Log in</PageTitle>
 
 <h1>Log in</h1>
-<div class="row">
-    <div class="col-lg-6">
+<div class="account-form-grid">
+    <div class="account-form-column">
         <section>
             <StatusMessage Message="@errorMessage" />
             <EditForm EditContext="editContext" method="post" OnSubmit="LoginUser" FormName="login">
                 <DataAnnotationsValidator />
-                <h2>Use a local account to log in.</h2>
+                <RadzenText TextStyle="TextStyle.H2" TagName="TagName.H2">Use a local account to log in.</RadzenText>
                 <hr />
-                <ValidationSummary class="text-danger" role="alert" />
-                <div class="form-floating mb-3">
-                    <InputText @bind-Value="Input.Email" id="Input.Email" class="form-control" autocomplete="username webauthn" aria-required="true" placeholder="name@example.com" />
-                    <label for="Input.Email" class="form-label">Email</label>
-                    <ValidationMessage For="() => Input.Email" class="text-danger" />
+                <ValidationSummary class="account-validation" role="alert" />
+                <div class="account-field">
+                    <InputText @bind-Value="Input.Email" id="Input.Email" class="rz-inputtext rz-textbox account-control" autocomplete="username webauthn" aria-required="true" placeholder="name@example.com" />
+                    <label for="Input.Email" class="account-label">Email</label>
+                    <ValidationMessage For="() => Input.Email" class="account-validation" />
                 </div>
-                <div class="form-floating mb-3">
-                    <InputText type="password" @bind-Value="Input.Password" id="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label for="Input.Password" class="form-label">Password</label>
-                    <ValidationMessage For="() => Input.Password" class="text-danger" />
+                <div class="account-field">
+                    <InputText type="password" @bind-Value="Input.Password" id="Input.Password" class="rz-inputtext rz-textbox account-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                    <label for="Input.Password" class="account-label">Password</label>
+                    <ValidationMessage For="() => Input.Password" class="account-validation" />
                 </div>
-                <div class="checkbox mb-3">
-                    <label class="form-label">
-                        <InputCheckbox @bind-Value="Input.RememberMe" class="darker-border-checkbox form-check-input" />
+                <div class="account-field">
+                    <label class="account-check">
+                        <InputCheckbox @bind-Value="Input.RememberMe" class="account-checkbox" />
                         Remember me
                     </label>
                 </div>
                 <div>
-                    <button type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                    <button type="submit" class="rz-button rz-button-md rz-variant-filled rz-primary rz-shade-default account-action-fill">Log in</button>
                 </div>
                 <hr />
-                <div class="d-flex flex-column">
-                    <span class="text-secondary mx-auto mt-2">OR</span>
-                    <PasskeySubmit Operation="PasskeyOperation.Request" Name="Input.Passkey" EmailName="Input.Email" class="btn btn-link mx-auto">Log in with a passkey</PasskeySubmit>
+                <div class="account-passkey">
+                    <span>OR</span>
+                    <PasskeySubmit Operation="PasskeyOperation.Request" Name="Input.Passkey" EmailName="Input.Email" class="account-link-button">Log in with a passkey</PasskeySubmit>
                 </div>
                 <hr />
                 <div>
@@ -62,7 +62,7 @@
             </EditForm>
         </section>
     </div>
-    <div class="col-lg-4 col-lg-offset-2">
+    <div class="account-form-column">
         <section>
             <h3>Use another service to log in.</h3>
             <hr />
