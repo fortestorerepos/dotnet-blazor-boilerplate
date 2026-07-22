@@ -3,10 +3,11 @@ SERVER_PROJECT := ./Server/blazor-boilerplate.csproj
 DEV_PROFILE ?= http
 PROD_URLS ?= http://localhost:5000
 DOTNET ?= dotnet
+PROD_OUTPUT := ./publish/blazor-boilerplate.dll
 
 .DEFAULT_GOAL := build
 
-.PHONY: help setup restore build dev start console publish clean
+.PHONY: help setup restore build dev start console publish serve clean
 
 help:
 	@echo "Targets:"
@@ -17,6 +18,7 @@ help:
 	@echo "  make build    Build the solution"
 	@echo "  make restore  Restore NuGet packages"
 	@echo "  make publish  Publish a Release build to ./publish"
+	@echo "  make serve    Publish and run the app from ./publish"
 	@echo "  make clean    Clean the solution"
 
 setup:
@@ -39,6 +41,9 @@ console:
 
 publish:
 	$(DOTNET) publish $(SERVER_PROJECT) --configuration Release --output ./publish
+
+serve: publish
+	cd ./publish && $(DOTNET) ./$(notdir $(PROD_OUTPUT)) --urls "$(PROD_URLS)"
 
 clean:
 	$(DOTNET) clean $(SOLUTION)
